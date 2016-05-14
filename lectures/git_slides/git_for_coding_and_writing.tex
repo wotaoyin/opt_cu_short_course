@@ -1,0 +1,233 @@
+%
+\documentclass[hyperref,compress,handout,9pt,usepdftitle=false]{beamer}
+
+\input{../bmacros}
+\graphicspath{{images/}} % besides the current folder, where to look for new files
+
+% show presentation notes
+%\usepackage{pgfpages}
+%\setbeameroption{show notes}
+%\setbeameroption{show notes on second screen=right}
+
+%% ---- pass to PDF ----
+\hypersetup{pdftitle={Git for coding and writing}, pdfauthor={Wotao Yin}}
+\subject{Optimization} % Should be passed to PDF
+
+% ---- pass to title page ----
+\title{Git for Coding and Writing}
+
+\author{\begin{small}Instructor: Wotao Yin\\ Spring 2015\end{small}\\[25pt]
+}
+\institute{
+%Contributors: % names
+  }
+\date[]{}
+\usepackage[normalem]{ulem}
+\usepackage{graphicx}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+% --- outline ---
+%\AtBeginSection[]
+%{
+%  \begin{frame}
+%    \frametitle{Outline}
+%    \tableofcontents[currentsection]
+%  \end{frame}
+%}
+
+% --- slide ---
+\begin{frame}{What is it for?}
+\begin{witemize}
+\item Version control: record the changes, restore changes, compare versions, branching/merging
+\item Collaborative, distributed co-authoring
+\item Fast and very robust
+\end{witemize}
+It is used by tens of thousands of projects
+\end{frame}
+
+% --- slide ---
+\begin{frame}{Setup}
+\begin{witemize}
+\item Standard approach:
+\begin{itemize}
+  \item download git for Linux/OSX/Windows
+  \item learn git commands
+\end{itemize}
+\item Easy approach: download SmartGit (free for personal use) and use the GUI
+\end{witemize}
+\end{frame}
+
+% --- slide ---
+\begin{frame}{Create a new repo}
+\begin{witemize}
+\item Goto an existing folder
+\item Command: \code{git init}
+\item SmartGit: \code{Repository -> Add or Create} and follow instructions
+\end{witemize}
+\end{frame}
+
+% --- slide ---
+\begin{frame}{Clone an existing repo}
+\begin{witemize}
+\item Find its local path or remote URL
+\item Goto where you want to save the clone
+\item Clone a local repo: \code{git clone /path/to/repo}
+\item Clone a remote repo: \code{git clone username@URL}
+\item SmartGit: \code{Repository -> Clone}
+\end{witemize}
+\end{frame}
+
+% --- slide ---
+\begin{frame}{If the repo has multiple branches}
+\begin{witemize}
+\item Ensure no uncommitted changes or stash them (will explain later)
+\item Suppose that you want to check out a branch called ``dev" (so that the folders will have the files in that branch)
+\item Command: \code{git checkout dev}
+\item SmartGit: Right Click a branch and select \code{Check Out}, or \code{Branch -> Checkout} and select one from the log
+\end{witemize}
+\end{frame}
+
+% --- slide ---
+\begin{frame}{Typical branches}
+\begin{witemize}
+\item \code{master}: the stable, shareable versions
+\item \code{dev}: versions with changes in progress, merge to \code{master} once stable
+\item \code{dev\_partname}: versions with changes only in a part, merge to \code{dev} at milestones
+\item \code{dev\_feature}: versions for a specific feature, merge to \code{dev} once stable
+\item \code{dev\_yourname}: versions in charge by a person, merge to \code{dev} once stable
+\end{witemize}
+\end{frame}
+
+% --- slide ---
+\begin{frame}{Add a branch}
+\begin{witemize}
+\item Check out the branch your new branch will be based on: \code{git checkout dev}
+\item Add a new branch: \code{git checkout dev\_yourname}, or add it and check it out \code{git checkout -b dev\_yourname}
+\item SmartGit: \code{Branch -> Add Branch}
+\end{witemize}
+\end{frame}
+
+% --- slide ---
+\begin{frame}{Delete a branch}
+\begin{witemize}
+\item (to be completed)
+\end{witemize}
+\end{frame}
+
+% --- slide ---
+\begin{frame}{Workflow}
+\begin{witemize}
+\item Working direction: actual files
+\item Index (staging area): record changes temporarily, stage for commit
+\item Repo: stores all the commits
+\end{witemize}
+\begin{center}
+  \includegraphics[width=.4\textwidth]{workflow}\\(from git-scm.com)
+\end{center}
+\end{frame}
+
+% --- slide ---
+\begin{frame}{Track a new file or record changes (stage)}
+\begin{witemize}
+\item Command: \code{git add <filename>}, \code{git add *}
+\item SmartGit: select file(s) and click on the \code{Stage} button
+\item You can unstage file(s) using the \code{git reset} command or the \code{Unstage} button
+\end{witemize}
+\end{frame}
+
+% --- slide ---
+\begin{frame}{Commit}
+\begin{witemize}
+\item Permanently\footnote{not really: you can use \code{git reset} in a dangerous manner to undo it.} record the changes
+\item Command: \code{git commit -m "Commit message"}
+\item SmartGit: click on the \code{Commit} button
+\end{witemize}
+\end{frame}
+
+% --- slide ---
+\begin{frame}{File status}
+\begin{center}
+  \includegraphics[width=0.8\textwidth]{filestatus}
+\end{center}
+\end{frame}
+
+% --- slide ---
+\begin{frame}{Pushing to a remote repo}
+\begin{witemize}
+\item Well-known remot repo hosts: GitHub, BitBucket, ...
+\item If you did not clone a repo from a remote repo, then \code{origin} is not set.
+\begin{itemize}
+  \item Command: \code{git remote add origin URL}
+  \item SmartGit: \code{Remote -> Add}
+\end{itemize}
+otherwise, \code{origin} is already set
+\item Command to push a branch (say ``dev'')
+\begin{itemize}
+  \item Command: \code{git push origin dev}
+  \item SmartGit: click on the \code{Push} button if \code{dev} is checked out; otherwise, right-click on the \code{dev} branch and select \code{Push}
+\end{itemize}
+\end{witemize}
+\end{frame}
+
+% --- slide ---
+\begin{frame}{Fetch and Pull}
+\begin{witemize}
+\item Fetch: fetch remote changes, and bring my local repo up to date; no change to the working files
+\item Pull: fetch and then bring (see next slide) the changes all the way to your working directly
+\item Command:
+\begin{itemize}
+  \item Fetch:
+  \item Pull:
+\end{itemize}
+\item SmartGit: click on the \code{Pull} button and select \code{Pull} or \code{Fetch Only}
+\end{witemize}
+\end{frame}
+
+% --- slide ---
+\begin{frame}{Git data}
+\begin{center}
+  \includegraphics[width=0.8\textwidth]{data_transport}
+\end{center}
+\end{frame}
+
+% --- slide ---
+\begin{frame}{Pull: Rebase vs Merge}
+\begin{witemize}
+\item (please complete)
+\end{witemize}
+\end{frame}
+
+% --- slide ---
+\begin{frame}{Fork}
+\begin{witemize}
+\item  (please complete)
+\end{witemize}
+\end{frame}
+
+% --- slide ---
+\begin{frame}{Merge and Pull Request}
+\begin{witemize}
+\item  (please complete)
+\end{witemize}
+\end{frame}
+
+% --- slide ---
+\begin{frame}{.gitignore}
+\begin{witemize}
+\item  (please complete)
+\end{witemize}
+\end{frame}
+
+% --- slide ---
+\begin{frame}{(feel free to add other topics)}
+\begin{witemize}
+\item  
+\end{witemize}
+\end{frame}
+
+\end{document}
