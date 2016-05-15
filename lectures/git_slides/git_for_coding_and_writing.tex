@@ -1,6 +1,7 @@
 %
 \documentclass[hyperref,compress,handout,9pt,usepdftitle=false]{beamer}
 
+
 \input{../bmacros}
 \graphicspath{{images/}} % besides the current folder, where to look for new files
 
@@ -115,7 +116,9 @@ It is used by tens of thousands of projects
 % --- slide ---
 \begin{frame}{Delete a branch}
 \begin{witemize}
-\item (to be completed)
+\item Checkout a branch other than the branch to be deleted
+\item Delete branch (say dev): \code{git branch -d dev}
+\item SmartGit: checkout another branch and \code{Branch ->  Delete}
 \end{witemize}
 \end{frame}
 
@@ -181,8 +184,8 @@ otherwise, \code{origin} is already set
 \item Pull: fetch and then bring (see next slide) the changes all the way to your working directly
 \item Command:
 \begin{itemize}
-  \item Fetch:
-  \item Pull:
+  \item Fetch (say origin): \code{git fetch origin}
+  \item Pull: \code{git pull origin}
 \end{itemize}
 \item SmartGit: click on the \code{Pull} button and select \code{Pull} or \code{Fetch Only}
 \end{witemize}
@@ -196,30 +199,110 @@ otherwise, \code{origin} is already set
 \end{frame}
 
 % --- slide ---
-\begin{frame}{Pull: Rebase vs Merge}
+\begin{frame}{Pull: Merge vs Rebase}
 \begin{witemize}
-\item (please complete)
+\item Two main ways to integrate changes from one branch to another
+\item Merge: integrate diverged work history and keep work history unchanged (fast-forward, three-way merging, see \href{https://progit2.s3.amazonaws.com/en/2016-03-22-f3531/progit-en.1084.pdf}{GitPro})
+\begin{center}
+	\includegraphics[width=0.8\textwidth]{merge1}
+\end{center}
+\begin{center}
+	\includegraphics[width=0.8\textwidth]{merge2}
+\end{center}
 \end{witemize}
 \end{frame}
 
 % --- slide ---
+\begin{frame}{Pull: Merge vs Rebase (cont'd)}
+	\begin{witemize}
+		\item Merge Command (in the above example):\\ \code{git checkout master\\git merge iss53}\\
+		\code{git branch -d iss53} (delete merged branch)
+		\item Merge SmartGit: \code{Branch -> Merge -> Select branch to be merged into current branch}
+		
+	\end{witemize}
+\end{frame}
+
+% --- slide ---
+\begin{frame}{Pull: Merge vs Rebase (cont'd)}
+	\begin{witemize}
+		\item Rebase: takes all the changes that were commited on the current branch below the HEAD and reapply them on another one
+		\item Changes work history, making it 'linear' 
+		\begin{center}
+			\includegraphics[width=1.0\textwidth]{rebase}
+		\end{center}
+		\item Note: \textbf{Do not rebase commits that exist outside your repository}
+		
+	\end{witemize}
+\end{frame}
+
+% --- slide ---
+\begin{frame}{Pull: Merge vs Rebase (cont'd)}
+	\begin{witemize}
+		\item Rebase Command (in the above example): \\
+		\code{git checkout experiment\\ git rebase master \\git checkout master}\\
+		\code{git merge experiment} (fast-forward merge)
+		\begin{center}
+			\includegraphics[width=1.0\textwidth]{rebase2}
+		\end{center}
+		
+		
+	\end{witemize}
+\end{frame}
+
+% --- slide ---
+\begin{frame}{Pull: Merge vs Rebase (cont'd)}
+	\begin{witemize}
+		\item Rebase SmartGit: \code{Branch -> Rebase}
+		\begin{itemize}
+			\item \textbf{Rebase HEAD to} rebases ('moves') the commits below the HEAD to the selected commit
+			\item \textbf{Rebase to HEAD} duplicates commits from a separate branch to the HEAD
+			\item See \href{http://www.syntevo.com/doc/display/SG/Rebase}{\textit{here}} for illustrations
+		\end{itemize}
+		
+	
+		
+		
+	\end{witemize}
+\end{frame}
+
+
+% --- slide ---
 \begin{frame}{Fork}
 \begin{witemize}
-\item  (please complete)
+\item  A fork is a copy of a repository
+\item Most commonly, forks are used to either propose changes to someone else's project or to use someone else's project as a starting point for your own idea.
+\item Two-step (say on GitHub): 
+\begin{itemize}
+	\item Navigate to the repository to be forked
+	\item In the top-right corner of the page, click \textbf{Fork}
+\end{itemize}
 \end{witemize}
 \end{frame}
 
 % --- slide ---
 \begin{frame}{Merge and Pull Request}
 \begin{witemize}
-\item  (please complete)
+\item  Merge a pull request into the upstream branch when work is completed. Anyone with push access to the repository can complete the merge
+\item If the merge will not have any conflicts, you can merge the pull request online
+\begin{center}
+	\includegraphics[width=1.0\textwidth]{pull_request}
+\end{center}
 \end{witemize}
 \end{frame}
 
 % --- slide ---
 \begin{frame}{.gitignore}
 \begin{witemize}
-\item  (please complete)
+\item Specifies intentionally untracked files to ignore
+\item Rules for patterns you can put in the \textbf{.gitignore} file are as follows:
+\begin{itemize}
+	\item Blank lines or lines starting with \# are ignored
+	\item Standard glob patterns work
+	\item You can start patterns with a forward slash to avoid recursivity
+	\item You can end patterns with a forward slash to specify a directory
+	\item You can negate a pattern by starting it with an exclamation point (!)
+\end{itemize}
+\item For more examples, see \href{https://progit2.s3.amazonaws.com/en/2016-03-22-f3531/progit-en.1084.pdf}{GitPro}
 \end{witemize}
 \end{frame}
 
