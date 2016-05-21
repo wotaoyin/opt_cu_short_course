@@ -6,12 +6,17 @@ void increment(int & x, int times){
   }
 }
 
+// main function
 int main(){
+  // starting number
   int x = 0;
-  int n = 100;
+  // increment n times
+  int n = 100000000;
 
-  increment(x, 100);
+  // call function increment
+  increment(x, n);
 
+  // display result
   std::cout << x << std::endl;
   
   return 0;

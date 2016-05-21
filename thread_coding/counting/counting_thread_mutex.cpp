@@ -8,7 +8,7 @@ std::mutex g_increment_mutex;
 void increment(int & x, int times){
   for(int i = 0 ; i < times; ++i){
     g_increment_mutex.lock();
-    x=x+1;
+    ++x;
     g_increment_mutex.unlock();
   }
 }
@@ -16,7 +16,7 @@ void increment(int & x, int times){
 int main(){
   std::vector<std::thread> threads;
   int x = 0;
-  int n = 100000;
+  int n = 1000000;
   int nthreads = 4;
   int thread_n = n/nthreads;
   for(int i=0; i < nthreads; ++i){
